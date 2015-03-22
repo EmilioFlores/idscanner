@@ -18,7 +18,7 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body class="step1">
+  <body class="step1" id="body">
   <div class="container">
       <div>
         <img src="img/loading.gif" id="loading"/>
@@ -40,6 +40,8 @@
                           <canvas id="source" width="760" height="480" style="display:none;"></canvas>
                           <img src="img/sourceID.jpg" id="sourceID" style="display:none;"/>
                           <div id="no_rtc" class="alert alert-error" style="display:none;"></div>
+                      </div>
+                      <div id="bar">
                       </div>
                     </div>
                   </div>
@@ -86,6 +88,8 @@
     <script src="/js/dat.gui.js"></script>
     <script src="/js/profiler.js"></script>
     <script src="/js/compatibility.js"></script>
+
+    <script src="/js/nanobar.min.js"></script>
 
     <!--  Open cv libs -->
     <script src="/js/glfx.js"></script>

@@ -1,5 +1,5 @@
 .lead{
-  font-size: 60px !important;
+  font-size: 50px !important;
   text-align: center;
 }
 
@@ -24,4 +24,12 @@
   width: 80%;
   margin-left: 10%;
   margin-top: 30px;
+}
+
+#bar{
+  position: absolute;
+  width: 30%;
+  margin-left: 70%;
+  top: 180px;
+  color: red;
 }

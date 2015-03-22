@@ -96,7 +96,7 @@ $(window).load(function() {
       var matches, homo3x3, match_mask;
       var num_train_levels = 4;
       var flag = false;
-      var counter = 15;
+      var counter = 10;
 
       var demo_opt = function(){
           this.blur_size = 5;
