@@ -1,0 +1,13 @@
+.lead{
+  font-size: 60px !important;
+  text-align: center;
+}
+
+#result, #canvas{
+  float: left;
+}
+
+#loading{
+  width: 80%;
+  margin-left: 10%;
+}

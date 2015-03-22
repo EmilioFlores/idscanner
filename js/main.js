@@ -60,8 +60,13 @@
           processData: false,
           type: 'POST',
           success: function(data){
-            alert(data.text_block[0].text);
-            console.log(data);
+            //alert(data.text_block[0].text);
+            var array = data.text_block[0].text.split('\n');
+            $("#studentID").val(array[0]);
+            $("#firstName").val(array[1]);
+            $("#major").val(array[2]);
+            $("#campus").val(array[4]);
+
             //Erase photo
             var clientId = "5603b47f9c09ce4";
             var postUrl;
