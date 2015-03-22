@@ -121,9 +121,9 @@
 
                 //xy original xy nueva
                 jsfeat.math.perspective_4point_transform(transform, 0,   0,   0,  0,
-                                                                    640, 0,   550, 100,
-                                                                    640, 480, 300, 400,
-                                                                    0,   480, 100, 400);
+                                                                    1280, 0,   640, 0,
+                                                                    1280, 960, 640, 480,
+                                                                    0,   960, 0, 480);
                 jsfeat.matmath.invert_3x3(transform, transform);
 
                 stat.add("grayscale");
