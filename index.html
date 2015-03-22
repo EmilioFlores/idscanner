@@ -30,11 +30,12 @@
               </p>
               <figure class="not-ready">
                 <div class="container">
-                  <canvas id="result" width="400" height="180"></canvas>
+                  <canvas id="result" width="400" height="180" style="display: none"></canvas>
+                  <canvas id="photoCanvas" width="200" height="260" style="display: none"></canvas>
                   <div class="row">
-                    <div class="col-xs-12 col-sm-4">
+                    <div class="col-xs-12 webcam">
                       <video id="webcam" style="display:none;" height="480" width="640"></video>
-                      <div style=" width:640px;height:480px;margin: 10px auto;">
+                      <div>
                           <canvas id="canvas" width="640" height="480"></canvas>
                           <canvas id="source" width="760" height="480" style="display:none;"></canvas>
                           <img src="img/sourceID.jpg" id="sourceID" style="display:none;"/>

@@ -12,6 +12,7 @@ $(window).load(function() {
       var canvas = document.getElementById('canvas');
       var resultCanvas = document.getElementById('result');
       var source = document.getElementById('source');
+      var photoCanvas = document.getElementById('photoCanvas');
       var imgTar = document.getElementById('sourceID');
       var sourceCtx = source.getContext("2d");
       sourceCtx.drawImage(imgTar,0,0,760,480);
@@ -86,8 +87,11 @@ $(window).load(function() {
           return match_t;
       })();
 
+      //****************
+      //GLOBAL VARIABLES
+      //****************
       var gui,options,ctx,canvasWidth,canvasHeight;
-      var img_u8, img_u8_smooth, simg_u8, img_u8_warp, transform, screen_corners, num_corners, screen_descriptors;
+      var img_u8, img_u8_smooth, simg_u8, img_u8_warp, pImg_u8_warp, transform, pTransform, screen_corners, num_corners, screen_descriptors;
       var pattern_corners, pattern_descriptors, pattern_preview;
       var matches, homo3x3, match_mask;
       var num_train_levels = 4;
@@ -187,6 +191,8 @@ $(window).load(function() {
           simg_u8 = new jsfeat.matrix_t(760, 480, jsfeat.U8_t | jsfeat.C1_t);
           img_u8_warp = new jsfeat.matrix_t(640, 480, jsfeat.U8_t | jsfeat.C1_t);
           transform = new jsfeat.matrix_t(3, 3, jsfeat.F32_t | jsfeat.C1_t);
+          pImg_u8_warp = new jsfeat.matrix_t(640, 480, jsfeat.U8_t | jsfeat.C1_t);
+          pTransform = new jsfeat.matrix_t(3, 3, jsfeat.F32_t | jsfeat.C1_t);
 
           // after blur
           img_u8_smooth = new jsfeat.matrix_t(640, 480, jsfeat.U8_t | jsfeat.C1_t);
@@ -276,18 +282,24 @@ $(window).load(function() {
                   //render_matches(ctx, matches, num_matches);
                   if(good_matches > 8 && !flag){
                     var rctx = resultCanvas.getContext('2d');
-                    var plusY = -300;
+                    var pctx = photoCanvas.getContext('2d');
+
+                    var modXResult = -20;
+                    var modYResult = -300;
+                    var modXPhoto = -440;
+                    var modYPhoto = -20;
                     var shape_pts = tCorners(homo3x3.data, pattern_preview.cols*2, pattern_preview.rows*2);
+
+                    //Transform for information
                     jsfeat.imgproc.warp_perspective(img_u8, img_u8_warp, transform, 0);
                     jsfeat.math.perspective_4point_transform(transform,
-                      shape_pts[0].x,   shape_pts[0].y,   0-20,  0+plusY,
-                      shape_pts[1].x, shape_pts[1].y,   640-20, 0+plusY,
-                      shape_pts[2].x, shape_pts[2].y, 640-20, 480+plusY,
-                      shape_pts[3].x,   shape_pts[3].y, 0-20, 480+plusY);
+                      shape_pts[0].x,   shape_pts[0].y,   0+modXResult,     0+modYResult,
+                      shape_pts[1].x,   shape_pts[1].y,   640+modXResult,  0+modYResult,
+                      shape_pts[2].x,   shape_pts[2].y,   640+modXResult,  480+modYResult,
+                      shape_pts[3].x,   shape_pts[3].y,   0+modXResult,    480+modYResult);
                     jsfeat.matmath.invert_3x3(transform, transform);
-                    jsfeat.imgproc.warp_perspective(img_u8, img_u8_warp, transform, 0);
 
-                    // render result back to canvas
+                    // render result back to canvas for info
                     var data_u32 = new Uint32Array(imageData.data.buffer);
                     var alpha = (0xff << 24);
                     var i = img_u8_warp.cols*img_u8_warp.rows, pix = 0;
@@ -296,6 +308,26 @@ $(window).load(function() {
                         data_u32[i] = alpha | (pix << 16) | (pix << 8) | pix;
                     }
                     rctx.putImageData(imageData, 0, 0);
+
+                    //Transform for photo
+                    jsfeat.imgproc.warp_perspective(img_u8, pImg_u8_warp, pTransform, 0);
+                    jsfeat.math.perspective_4point_transform(pTransform,
+                      shape_pts[0].x,   shape_pts[0].y,   0+modXPhoto,     0+modYPhoto,
+                      shape_pts[1].x,   shape_pts[1].y,   640+modXPhoto,  0+modYPhoto,
+                      shape_pts[2].x,   shape_pts[2].y,   640+modXPhoto,  480+modYPhoto,
+                      shape_pts[3].x,   shape_pts[3].y,   0+modXPhoto,    480+modYPhoto);
+                    jsfeat.matmath.invert_3x3(pTransform, pTransform);
+
+                    // render result back to canvas for photo
+                    //data_u32 = new Uint32Array(imageData.data.buffer);
+                    alpha = (0xff << 24);
+                    i = pImg_u8_warp.cols*pImg_u8_warp.rows, pix = 0;
+                    while(--i >= 0) {
+                        pix = pImg_u8_warp.data[i];
+                        data_u32[i] = alpha | (pix << 16) | (pix << 8) | pix;
+                    }
+                    pctx.putImageData(imageData, 0, 0);
+
                     if(counter<=0)
                     {
                       flag = true;

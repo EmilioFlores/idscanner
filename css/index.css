@@ -3,11 +3,19 @@
   text-align: center;
 }
 
-#result, #canvas{
-  float: left;
+#canvas{
+  display: block;
+  margin-left: 180px;
 }
 
 #loading{
   width: 80%;
   margin-left: 10%;
+}
+
+.webcam{
+  width: 640px;
+  display: block;
+  margin: 0 auto;
+  position: relative;
 }
