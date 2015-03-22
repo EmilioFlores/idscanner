@@ -27,6 +27,7 @@
           <video id="webcam" style="display:none;" height="480" width="640"></video>
           <div style=" width:640px;height:480px;margin: 10px auto;">
               <canvas id="canvas" width="640" height="480"></canvas>
+              <canvas id="tarjeta" width="640" height="480" style="display:none;"></canvas>
               <div id="no_rtc" class="alert alert-error" style="display:none;"></div>
               <div id="log" class="alert alert-info"></div>
           </div>
@@ -91,6 +92,7 @@
           // lets do some fun
           var video = document.getElementById('webcam');
           var canvas = document.getElementById('canvas');
+          var tarjeta = document.getElementById('tarjeta');
           try {
               var attempts = 0;
               var readyListener = function(event) {
@@ -331,6 +333,7 @@
 
                   ctx.putImageData(imageData, 0, 0);
 
+                  //Sufficient matches found
                   if(num_matches) {
                       render_matches(ctx, matches, num_matches);
                       if(good_matches > 8)

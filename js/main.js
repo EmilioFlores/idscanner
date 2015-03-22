@@ -107,6 +107,7 @@
       showError(error);
     });
     $("#form").hide();
+    $("#loading").hide();
   }
   function step2() {
     var canvas = document.querySelector('#step2 canvas');
@@ -144,6 +145,9 @@
       var vurl = "https://api.idolondemand.com/1/api/sync/ocrdocument/v1";
       var apikey1 = "31a53ab4-4b97-436e-8116-3d9485584bc7";
 
+      //Hide
+      $$("#photo").hide();
+
       //your APIv3 client id
       var clientId = "5603b47f9c09ce4";
       var imgUrl = step2Image.getAttribute("src");
@@ -168,6 +172,8 @@
           var vdata = new FormData();
           vdata.append("url", postUrl);
           vdata.append("apikey", apikey1);
+
+          $("#loading").show();
 
           $.ajax({
             url: vurl,
@@ -194,7 +200,7 @@
           })
       }
       $("#form").show();
-      $("#photo").hide();
+      $("#loading").hide();
     }
     /*********************************
     * UI Stuff
