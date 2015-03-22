@@ -106,6 +106,7 @@
     .fail(function (error) {
       showError(error);
     });
+    $("#form").hide();
   }
   function step2() {
     var canvas = document.querySelector('#step2 canvas');
@@ -121,7 +122,7 @@
     fxCanvas.draw(texture)
     .hueSaturation(-1, -1)//grayscale
     .unsharpMask(20, 2)
-    .brightnessContrast(0.1, 0.5)
+    .brightnessContrast(0.25, 0.0)
     .update();
     window.texture = texture;
     window.fxCanvas = fxCanvas;
@@ -192,6 +193,8 @@
             }
           })
       }
+      $("#form").show();
+      $("#photo").hide();
     }
     /*********************************
     * UI Stuff
