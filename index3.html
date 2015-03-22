@@ -19,7 +19,7 @@
 <body class="step1">
 <div class="container">
     <div>
-      <img src="img/loading.gif" id="loading" style="width:100%;"/>
+      <img src="img/loading.gif" id="loading"/>
     </div>
     <div class="alert alert-danger"><strong>Oops!</strong> <span></span></div>
     <div class="jumbotron" id="photo">
@@ -29,14 +29,7 @@
             </p>
 
             <figure class="not-ready">
-              <video id="webcam" style="" height="480" width="640"></video>
-              <div style=" width:640px;height:480px;margin: 10px auto;">
-                  <canvas id="canvas" width="640" height="480"></canvas>
-                  <canvas id="tarjeta" width="760" height="480" style="display:none;"></canvas>
-                  <img src="img/tarjeta-generica.jpg" id="imgTarjeta" style="display:none;"/>
-                  <div id="no_rtc" class="alert alert-error" style="display:none;"></div>
-                  <div id="log" class="alert alert-info"></div>
-              </div>
+                <video autoplay></video>
             </figure>
 
             <button class="btn btn-success" disabled id="takePicture">Take a picture</button>
@@ -120,8 +113,6 @@
 <script src="/js/glfx.js"></script>
 <script src="/js/jcrop.js"></script>
 <script src="/js/modernizr.js"></script>
-<script src="/js/OCRAD.js"></script>
-<script src="/js/base64.js"></script>
 <script src="/js/main.js"></script>
 </body>
 </html>

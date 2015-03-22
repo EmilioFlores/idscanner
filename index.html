@@ -17,22 +17,70 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body>
+  <body class="step1">
+  <div class="container">
+      <div>
+        <img src="img/loading.gif" id="loading"/>
+      </div>
+      <div class="alert alert-danger"><strong>Oops!</strong> <span></span></div>
+      <div class="jumbotron" id="photo">
+          <div id="step1">
+              <p class="lead">
+                  Take a good picture of your ID.
+              </p>
 
-    <h1 id="info">Please allow access to your camera!</h1>
-        <h1 id="infom"></h1>
-    <div class="container">
-      <canvas id="result" width="400" height="180"></canvas>
-      <div class="row">
-        <div class="col-xs-12 col-sm-4">
-          <video id="webcam" style="display:none;" height="480" width="640"></video>
-          <div style=" width:640px;height:480px;margin: 10px auto;">
-              <canvas id="canvas" width="640" height="480"></canvas>
-              <canvas id="tarjeta" width="760" height="480" style="display:none;"></canvas>
-              <img src="img/tarjeta-generica.jpg" id="imgTarjeta" style="display:none;"/>
-              <div id="no_rtc" class="alert alert-error" style="display:none;"></div>
-              <div id="log" class="alert alert-info"></div>
+              <figure class="not-ready">
+                <div class="container">
+                  <canvas id="result" width="400" height="180"></canvas>
+                  <div class="row">
+                    <div class="col-xs-12 col-sm-4">
+                      <video id="webcam" style="display:none;" height="480" width="640"></video>
+                      <div style=" width:640px;height:480px;margin: 10px auto;">
+                          <canvas id="canvas" width="640" height="480"></canvas>
+                          <canvas id="tarjeta" width="760" height="480" style="display:none;"></canvas>
+                          <img src="img/tarjeta-generica.jpg" id="imgTarjeta" style="display:none;"/>
+                          <div id="no_rtc" class="alert alert-error" style="display:none;"></div>
+                          <div id="log" class="alert alert-info"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </figure>
+
+              <button class="btn btn-success" disabled id="takePicture">Take a picture</button>
           </div>
+      </div>
+
+      <div class="container" id="form">
+        <div class="col-sm-6">
+          <h1>Student Information</h1>
+          <form>
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input type="text" class="form-control" id="firstName" placeholder="Enter your first name">
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" class="form-control" id="lastName" placeholder="Enter your last name">
+            </div>
+            <div class="form-group">
+              <label for="secondLastName">Last Name</label>
+              <input type="text" class="form-control" id="secondLastName" placeholder="Enter your second last name">
+            </div>
+            <div class="form-group">
+              <label for="studentID">Student ID</label>
+              <input type="text" class="form-control" id="studentID" placeholder="Enter your student ID">
+            </div>
+            <div class="form-group">
+              <label for="major">Major</label>
+              <input type="text" class="form-control" id="major" placeholder="Enter your major">
+            </div>
+            <div class="form-group">
+              <label for="campus">Campus</label>
+              <input type="text" class="form-control" id="campus" placeholder="Enter your campus">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button><br>
+          </form>
         </div>
       </div>
     </div>
@@ -49,6 +97,12 @@
     <script src="/js/dat.gui.js"></script>
     <script src="/js/profiler.js"></script>
     <script src="/js/compatibility.js"></script>
+
+    <!--  Open cv libs -->
+    <script src="/js/glfx.js"></script>
+    <script src="/js/jcrop.js"></script>
+    <script src="/js/modernizr.js"></script>
+    <script src="/js/main.js"></script>
 
     <script>
     $(window).ready(function()
@@ -327,7 +381,6 @@
                       render_matches(ctx, matches, num_matches);
                       if(good_matches > 8 && !flag){
                         var rctx = resultCanvas.getContext('2d');
-                        console.log(matches);
                         var plusY = -300;
                         var shape_pts = tCorners(homo3x3.data, pattern_preview.cols*2, pattern_preview.rows*2);
                         jsfeat.imgproc.warp_perspective(img_u8, img_u8_warp, transform, 0);
@@ -351,6 +404,7 @@
                         if(counter<=0)
                         {
                           flag = true;
+                          step2();
                         }
                         counter--;
                       }
