@@ -29,7 +29,14 @@
             </p>
 
             <figure class="not-ready">
-                <video autoplay></video>
+              <video id="webcam" style="" height="480" width="640"></video>
+              <div style=" width:640px;height:480px;margin: 10px auto;">
+                  <canvas id="canvas" width="640" height="480"></canvas>
+                  <canvas id="tarjeta" width="760" height="480" style="display:none;"></canvas>
+                  <img src="img/tarjeta-generica.jpg" id="imgTarjeta" style="display:none;"/>
+                  <div id="no_rtc" class="alert alert-error" style="display:none;"></div>
+                  <div id="log" class="alert alert-info"></div>
+              </div>
             </figure>
 
             <button class="btn btn-success" disabled id="takePicture">Take a picture</button>
