@@ -50,6 +50,10 @@
     <script src="/js/compatibility.js"></script>
 
     <script>
+    $(window).ready(function()
+    {
+      //options.train_pattern();
+    });
     $(window).load(function() {
           "use strict";
 
@@ -80,7 +84,13 @@
               };
               var onDimensionsReady = function(width, height) {
                   demo_app(width, height);
+                  $(".dg").hide();
+                  $("#log").hide();
                   compatibility.requestAnimationFrame(tick);
+                  setTimeout(function(){
+                    options.train_pattern();
+                  }, 1000);
+
               };
 
               video.addEventListener('loadeddata', readyListener);
