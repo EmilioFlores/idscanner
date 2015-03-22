@@ -4,6 +4,10 @@
 
   function step2() {
     var canvas = document.querySelector('#result');
+    var photoCanv = document.querySelector('#photoCanvas');
+
+    $("#profilePic").attr("src", photoCanv.toDataURL());
+
     var img = document.querySelector('#resultimg');
     fxCanvas = fx.canvas();
 
