@@ -96,7 +96,7 @@ $(window).load(function() {
       var matches, homo3x3, match_mask;
       var num_train_levels = 4;
       var flag = false;
-      var counter = 10;
+      var counter = 15;
 
       var demo_opt = function(){
           this.blur_size = 5;
@@ -281,6 +281,11 @@ $(window).load(function() {
               if(num_matches) {
                   //render_matches(ctx, matches, num_matches);
                   if(good_matches > 8 && !flag){
+                    if(counter == 15)
+                      $(".lead").html("You got it!");
+                    if(counter < 9)
+                      $(".lead").html("Almost there...");
+
                     var rctx = resultCanvas.getContext('2d');
                     var pctx = photoCanvas.getContext('2d');
 
