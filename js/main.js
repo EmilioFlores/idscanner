@@ -147,6 +147,7 @@
 
       //Hide
       $("#photo").hide();
+      $("#loading").show();
 
       //your APIv3 client id
       var clientId = "5603b47f9c09ce4";
@@ -173,8 +174,6 @@
           vdata.append("url", postUrl);
           vdata.append("apikey", apikey1);
 
-          $("#loading").show();
-
           $.ajax({
             url: vurl,
             data: vdata,
@@ -196,11 +195,11 @@
                       xhr.setRequestHeader("Authorization", "Client-ID " + clientId);
                   }
               });
+              $("#form").show();
+              $("#loading").hide();
             }
           })
       }
-      $("#form").show();
-      $("#loading").hide();
     }
     /*********************************
     * UI Stuff
