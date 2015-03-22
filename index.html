@@ -56,6 +56,8 @@
           var video = document.getElementById('webcam');
           var canvas = document.getElementById('canvas');
           var tarjeta = document.getElementById('tarjeta');
+          var ttx = tarjeta.getContext("2d");
+          ctx.drawImage(img,10,10);
           try {
               var attempts = 0;
               var readyListener = function(event) {
