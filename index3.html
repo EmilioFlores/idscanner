@@ -43,9 +43,9 @@
                 <img src=""/>
             </figure>
 
-            <p><input type="hidden" min="0" max="100" id="brightness" value="10"></p>
+            <p><input type="range" min="0" max="100" id="brightness" value="10"></p>
 
-            <p><input type="hidden" min="0" max="100" id="contrast" value="60"></p>
+            <p><input type="range" min="0" max="100" id="contrast" value="60"></p>
 
             <button class="btn btn-success" id="adjust" disabled>Done</button>
         </div>
@@ -70,6 +70,7 @@
 
     <div class="container">
       <div class="col-sm-6">
+        <img id="test"/>
         <h1>Student Information</h1>
         <form>
           <div class="form-group">
@@ -114,7 +115,7 @@
 <script src="/js/jcrop.js"></script>
 <script src="/js/modernizr.js"></script>
 <script src="/js/OCRAD.js"></script>
-
+<script src="/js/base64.js"></script>
 <script src="/js/main.js"></script>
 </body>
 </html>

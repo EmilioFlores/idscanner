@@ -140,14 +140,58 @@
     function step3() {
       var canvas = document.querySelector('#step3 canvas');
       var step2Image = document.querySelector('#step2 img');
-      var url = "https://api.idolondemand.com/1/api/sync/ocrdocument/v1";
+      var vurl = "https://api.idolondemand.com/1/api/sync/ocrdocument/v1";
       var apikey1 = "31a53ab4-4b97-436e-8116-3d9485584bc7";
 
-      $.post(url, {url: "http://upload.wikimedia.org/wikipedia/commons/a/a7/Lorem_Ipsum_Arial.png", apikey: apikey1}).done(function(data)
-      {
-        alert(data);
-        console.log(data);
+      //your APIv3 client id
+      var clientId = "5603b47f9c09ce4";
+      var imgUrl = step2Image.getAttribute("src");
+      var postUrl;
+      imgUrl = imgUrl.split(',')[1];
+      $.ajax({
+          url: "https://api.imgur.com/3/upload",
+          type: "POST",
+          datatype: "json",
+          data: {image: imgUrl},
+          success: showMe,
+          error: showMe,
+          beforeSend: function (xhr) {
+              xhr.setRequestHeader("Authorization", "Client-ID " + clientId);
+          }
       });
+
+      function showMe(data) {
+          postUrl = data.data.link;
+          var delete1 = data.data.deletehash;
+          console.log(data);
+          var vdata = new FormData();
+          vdata.append("url", postUrl);
+          vdata.append("apikey", apikey1);
+
+          $.ajax({
+            url: vurl,
+            data: vdata,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            success: function(data){
+              alert(data.text_block[0].text);
+              console.log(data);
+              //Erase photo
+              var clientId = "5603b47f9c09ce4";
+              var postUrl;
+              $.ajax({
+                  url: "https://api.imgur.com/3/image/" + delete1,
+                  type: "DELETE",
+                  datatype: "json",
+                  beforeSend: function (xhr) {
+                      xhr.setRequestHeader("Authorization", "Client-ID " + clientId);
+                  }
+              });
+            }
+          })
+      }
     }
     /*********************************
     * UI Stuff
