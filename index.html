@@ -27,7 +27,8 @@
           <video id="webcam" style="display:none;" height="480" width="640"></video>
           <div style=" width:640px;height:480px;margin: 10px auto;">
               <canvas id="canvas" width="640" height="480"></canvas>
-              <canvas id="tarjeta" width="640" height="480" style="display:none;"></canvas>
+              <canvas id="tarjeta" width="760" height="480" style="display:none;"></canvas>
+              <img src="img/tarjeta-generica.jpg" id="imgTarjeta" style="display:none;"/>
               <div id="no_rtc" class="alert alert-error" style="display:none;"></div>
               <div id="log" class="alert alert-info"></div>
           </div>
@@ -56,8 +57,9 @@
           var video = document.getElementById('webcam');
           var canvas = document.getElementById('canvas');
           var tarjeta = document.getElementById('tarjeta');
+          var imgTar = document.getElementById('imgTarjeta');
           var ttx = tarjeta.getContext("2d");
-          ctx.drawImage(img,10,10);
+          ttx.drawImage(imgTar,0,0,760,480);
           try {
               var attempts = 0;
               var readyListener = function(event) {
@@ -124,7 +126,7 @@
           })();
 
           var gui,options,ctx,canvasWidth,canvasHeight;
-          var img_u8, img_u8_smooth, screen_corners, num_corners, screen_descriptors;
+          var img_u8, img_u8_smooth, timg_u8, screen_corners, num_corners, screen_descriptors;
           var pattern_corners, pattern_descriptors, pattern_preview;
           var matches, homo3x3, match_mask;
           var num_train_levels = 4;
@@ -151,7 +153,7 @@
                   new_width = (img_u8.cols*sc0)|0;
                   new_height = (img_u8.rows*sc0)|0;
 
-                  jsfeat.imgproc.resample(img_u8, lev0_img, new_width, new_height);
+                  jsfeat.imgproc.resample(timg_u8, lev0_img, new_width, new_height);
 
                   // prepare preview
                   pattern_preview = new jsfeat.matrix_t(new_width>>1, new_height>>1, jsfeat.U8_t | jsfeat.C1_t);
@@ -219,6 +221,7 @@
               ctx.strokeStyle = "rgb(0,255,0)";
 
               img_u8 = new jsfeat.matrix_t(640, 480, jsfeat.U8_t | jsfeat.C1_t);
+              timg_u8 = new jsfeat.matrix_t(760, 480, jsfeat.U8_t | jsfeat.C1_t);
               // after blur
               img_u8_smooth = new jsfeat.matrix_t(640, 480, jsfeat.U8_t | jsfeat.C1_t);
               // we wll limit to 500 strongest points
@@ -261,9 +264,11 @@
               if (video.readyState === video.HAVE_ENOUGH_DATA) {
                   ctx.drawImage(video, 0, 0, 640, 480);
                   var imageData = ctx.getImageData(0, 0, 640, 480);
+                  var tImageData = ttx.getImageData(0,0, 760, 480);
 
                   stat.start("grayscale");
                   jsfeat.imgproc.grayscale(imageData.data, 640, 480, img_u8);
+                  jsfeat.imgproc.grayscale(tImageData.data, 760, 480, timg_u8);
                   stat.stop("grayscale");
 
                   stat.start("gauss blur");

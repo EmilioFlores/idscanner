@@ -146,7 +146,7 @@
       var apikey1 = "31a53ab4-4b97-436e-8116-3d9485584bc7";
 
       //Hide
-      $$("#photo").hide();
+      $("#photo").hide();
 
       //your APIv3 client id
       var clientId = "5603b47f9c09ce4";
